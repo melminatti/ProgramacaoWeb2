@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Notas Escolar</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        td {
+            border-bottom: 1px solid #eee;
+            padding: 8px;
+            text-align: center;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            background-color: #ebf5fb;
+        }
+
+        /* Estilo para as linhas de média */
+        .row-media {
+            background-color: #ecf0f1;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .col-media {
+            background-color: #e8f6f3;
+            font-weight: bold;
+            color: #16a085;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Portal do Professor - Lançamento de Notas</h1>
+</header>
+
+<div class="controls">
+    <button onclick="toggleMediaNotas()">Média das Notas (Vertical)</button>
+    <button onclick="toggleMediaAlunos()">Média dos Alunos (Horizontal)</button>
+</div>
+
+<table id="tabela">
+    <thead>
+        <tr> 
+            <th rowspan="2">Nome do Aluno</th>
+            <th colspan="3">1º Semestre</th>
+            <th colspan="3">2º Semestre</th>
+            <th colspan="3">3º Semestre</th>
+        </tr>
+        <tr> 
+            <th>N1</th><th>N2</th><th>N3</th>
+            <th>N1</th><th>N2</th><th>N3</th>
+            <th>N1</th><th>N2</th><th>N3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>João</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td></tr>
+        <tr><td>Maria</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td></tr>
+        <tr><td>José</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td></tr>
+        <tr><td>Paulo</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td></tr>
+        <tr><td>Miguel</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td></tr>
+        <tr><td>Julia</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td></tr>
+    </tbody>
+</table>
+
+<script>
+    let mediaNotasAtiva = false;
+    let mediaAlunosAtiva = false;
+
+    function toggleMediaNotas() {
+        const tabela = document.getElementById("tabela");
+        const tbody = tabela.querySelector("tbody");
+
+        if (mediaNotasAtiva) {
+            tbody.deleteRow(tbody.rows.length - 1);
+            mediaNotasAtiva = false;
+            return;
+        }
+
+        const row = tbody.insertRow();
+        row.classList.add("row-media");
+        row.insertCell().innerText = "Média Notas";
+
+        for (let col = 1; col <= 9; col++) {
+            let soma = 0;
+            let count = 0;
+            for (let r = 0; r < tbody.rows.length - 1; r++) {
+                const input = tbody.rows[r].cells[col].querySelector("input");
+                if (input) {
+                    const val = parseFloat(input.value);
+                    if (!isNaN(val)) {
+                        soma += val;
+                        count++;
+                    }
+                }
+            }
+            const media = count > 0 ? (soma / count).toFixed(1) : "0.0";
+            row.insertCell().innerText = media;
+        }
+
+        if (mediaAlunosAtiva) {
+            row.insertCell().innerText = "-";
+        }
+
+        mediaNotasAtiva = true;
+    }
+
+    function toggleMediaAlunos() {
+        const tabela = document.getElementById("tabela");
+        const tbody = tabela.querySelector("tbody");
+        const headerRows = tabela.querySelectorAll("thead tr");
+        const secondHeader = headerRows[1];
+
+        if (mediaAlunosAtiva) {
+            secondHeader.deleteCell(secondHeader.cells.length - 1);
+            headerRows[0].cells[0].rowSpan = 2; // Volta o rowspan normal
+            for (let r = 0; r < tbody.rows.length; r++) {
+                tbody.rows[r].deleteCell(tbody.rows[r].cells.length - 1);
+            }
+            mediaAlunosAtiva = false;
+            return;
+        }
+
+        const thMedia = document.createElement("th");
+        thMedia.innerText = "Média Final";
+        secondHeader.appendChild(thMedia);
+
+        for (let r = 0; r < tbody.rows.length; r++) {
+            let soma = 0;
+            let count = 0;
+            
+            // Se for a linha de média das notas
+            if (mediaNotasAtiva && r === tbody.rows.length - 1) {
+                const cell = tbody.rows[r].insertCell();
+                cell.innerText = "-";
+                cell.classList.add("col-media");
+                continue;
+            }
+
+            for (let c = 1; c <= 9; c++) {
+                const input = tbody.rows[r].cells[c].querySelector("input");
+                if (input) {
+                    const val = parseFloat(input.value);
+                    if (!isNaN(val)) {
+                        soma += val;
+                        count++;
+                    }
+                }
+            }
+            const media = (count > 0 ? (soma / count).toFixed(1) : "0.0");
+            const cell = tbody.rows[r].insertCell();
+            cell.innerText = media;
+            cell.classList.add("col-media");
+        }
+
+        mediaAlunosAtiva = true;
+    }
+</script>
+</body>
+</html>
