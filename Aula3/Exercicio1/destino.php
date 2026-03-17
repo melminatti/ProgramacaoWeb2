@@ -14,9 +14,6 @@ $headers = function_exists('apache_request_headers') ? apache_request_headers() 
 ?>
 
 <!DOCTYPE html>
-
-
-
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
