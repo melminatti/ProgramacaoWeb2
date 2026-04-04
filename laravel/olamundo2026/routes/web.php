@@ -1,14 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContatoController;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::resource('/contato', ContatoController::class );
+use App\Http\Controllers\HomeController;
 
 Route::get('/sobre', function () {
-    return  view('sobre');
+    return view('sobre');
 });
 
+Route::resource('/contato', ContatoController::class);
+
+Route::resource('/', HomeController::class);
