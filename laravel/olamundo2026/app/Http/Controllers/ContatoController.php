@@ -12,6 +12,6 @@ class ContatoController extends Controller
         $data['titulo'] = "Minha página de contato dinâmica";
         $data['email'] = 'melissa.minatti@unidavi.edu.br';
         
-        return view('contato', $data);
+        return view('contato.contato', $data);
     }
 }
